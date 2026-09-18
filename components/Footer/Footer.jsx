@@ -1,101 +1,53 @@
-'use client';
-import { resourcesLinks, platformLinks, communityLinks } from "../../constants";
-import { Facebook, Instagram, Twitter, Github, Linkedin } from 'lucide-react';
-import { motion } from "framer-motion";
+
 import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <motion.footer 
-      className="mt-20 py-10 bg-neutral-900/50"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="col-span-2 lg:col-span-1">
-            <Link href="/" className='flex items-center flex-shrink-0'>
-              <img className='h-10 w-auto' src="/logo.png" alt='logo' />
-              <span className='text-xl tracking-tight text-white font-bold ml-2'>Otical</span>
-            </Link>
-            <p className="text-neutral-400 mt-4">Otical is an IT development company that provides a wide range of services to help you build and grow your business.</p>
+    <footer className="bg-surface-container-lowest border-t border-white/5">
+      <div className="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto py-20">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+          {/* Column 1: Brand & CTA */}
+          <div className="col-span-1 md:col-span-2">
+            <div className="flex items-center gap-3 mb-6">
+              <img alt="Otical Logo" className="w-10 h-10 object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLtF79h-JvZ0n9LCXQNFwXfuuDn9C2lzdv5bv-OWymg8k2gaAXb1lH5m7xeURgfW5FZvEie7oSnhQwjRNSdaCXQeCkcBjb4fy_AoW86uk9tXcVKCKkw1g2J0xkMoxC-0hNBRoUyJmCe-Ay5_7p7s-YavpaRwWb29nSKRjlwTRK2TRErML2FEBqYxHxnwrK_pGgTr0d8JqASXxp_EbBCxOX0hx_4xkKDn7rYVfEKUf7Lmf22kCpKO3F98og"/>
+              <span className="font-headline-md text-headline-md font-bold text-primary tracking-tight">Otical</span>
+            </div>
+            <p className="text-text-muted mb-8 max-w-md">Transforming complex challenges into seamless digital experiences through cutting-edge AI integration and robust software architecture.</p>
+            <button className="primary-gradient text-on-primary-fixed font-button text-button px-6 py-3 rounded-lg hover:opacity-90 transition-all active:scale-95 border border-primary/30 shadow-sm">
+              Start a Project
+            </button>
           </div>
+          {/* Column 2: Quick Links */}
           <div>
-            <h3 className="text-md font-semibold mb-4 text-white uppercase tracking-wider">Resources</h3>
-            <ul className="space-y-3">
-              {resourcesLinks.map((link, index) => (
-                <li key={index}>
-                  <a
-                    href={link.href}
-                    className="text-neutral-300 hover:text-orange-500 transition-colors duration-300"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {link.text}
-                  </a>
-                </li>
-              ))}
+            <h4 className="font-button text-lg text-primary mb-6">Quick Links</h4>
+            <ul className="space-y-4">
+              <li><Link className="text-on-surface-variant hover:text-primary transition-colors" href="#">Home</Link></li>
+              <li><Link className="text-on-surface-variant hover:text-primary transition-colors" href="#">About Us</Link></li>
+              <li><Link className="text-on-surface-variant hover:text-primary transition-colors" href="#">Services</Link></li>
+              <li><Link className="text-on-surface-variant hover:text-primary transition-colors" href="#">Case Studies</Link></li>
             </ul>
           </div>
+          {/* Column 3: Connect */}
           <div>
-            <h3 className="text-md font-semibold mb-4 text-white uppercase tracking-wider">Platform</h3>
-            <ul className="space-y-3">
-              {platformLinks.map((link, index) => (
-                <li key={index}>
-                  <a
-                    href={link.href}
-                    className="text-neutral-300 hover:text-orange-500 transition-colors duration-300"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {link.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-md font-semibold mb-4 text-white uppercase tracking-wider">Community</h3>
-            <ul className="space-y-3">
-              {communityLinks.map((link, index) => (
-                <li key={index}>
-                  <a
-                    href={link.href}
-                    className="text-neutral-300 hover:text-orange-500 transition-colors duration-300"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {link.text}
-                  </a>
-                </li>
-              ))}
+            <h4 className="font-button text-lg text-primary mb-6">Connect</h4>
+            <ul className="space-y-4">
+              <li><Link className="text-on-surface-variant hover:text-primary transition-colors" href="#">Contact Us</Link></li>
+              <li><Link className="text-on-surface-variant hover:text-primary transition-colors" href="#">LinkedIn</Link></li>
+              <li><Link className="text-on-surface-variant hover:text-primary transition-colors" href="#">Twitter</Link></li>
+              <li><Link className="text-on-surface-variant hover:text-primary transition-colors" href="#">GitHub</Link></li>
             </ul>
           </div>
         </div>
-        <div className="mt-10 border-t border-neutral-700 pt-8 flex flex-col sm:flex-row items-center justify-between">
-          <p className="text-sm text-neutral-400">© {new Date().getFullYear()} Otical™ All Rights Reserved.</p>
-          <div className="flex space-x-6 mt-4 sm:mt-0">
-            <a href="https://www.linkedin.com/company/oticalofficial" className="text-neutral-400 hover:text-orange-500 transition-transform duration-300 transform hover:scale-125">
-              <Facebook size={20} />
-            </a>
-            <a href="https://www.linkedin.com/company/oticalofficial" className="text-neutral-400 hover:text-orange-500 transition-transform duration-300 transform hover:scale-125">
-              <Instagram size={20} />
-            </a>
-            <a href="https://www.linkedin.com/company/oticalofficial" className="text-neutral-400 hover:text-orange-500 transition-transform duration-300 transform hover:scale-125">
-              <Twitter size={20} />
-            </a>
-             <a href="https://www.linkedin.com/company/oticalofficial" className="text-neutral-400 hover:text-orange-500 transition-transform duration-300 transform hover:scale-125">
-              <Linkedin size={20} />
-            </a>
-             <a href="https://www.linkedin.com/company/oticalofficial" className="text-neutral-400 hover:text-orange-500 transition-transform duration-300 transform hover:scale-125">
-              <Github size={20} />
-            </a>
+        <div className="border-t border-white/10 mt-20 pt-8 flex justify-between items-center font-label-mono text-sm text-text-muted">
+          <p>&copy; {new Date().getFullYear()} Otical. All rights reserved.</p>
+          <div className="flex gap-6">
+            <Link href="#" className="hover:text-primary transition-colors">Terms of Service</Link>
+            <Link href="#" className="hover:text-primary transition-colors">Privacy Policy</Link>
           </div>
         </div>
       </div>
-    </motion.footer>
-  );
-};
+    </footer>
+  )
+}
 
 export default Footer;

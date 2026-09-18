@@ -1,44 +1,59 @@
-import { features } from "../../constants";
-import Animated from "../animation/Animated";
 
 const FeatureSection = () => {
   return (
-    <Animated>
-      <div className="relative mt-20 border-b border-neutral-800 min-h-[800px] py-12">
-        <div className="text-center">
-          <div>
-            <span className="bg-neutral-900 text-orange-500 rounded-full h-6 text-sm font-medium px-4 py-2 uppercase">
-              Features
-            </span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl mt-10 lg:mt-20 tracking-wide text-white">
-            Build, Launch, and Scale
-            <span className="bg-gradient-to-r from-orange-500 to-red-800 text-transparent bg-clip-text">
-              {" "}
-              Your Digital Products
-            </span>
-          </h2>
+    <section className="py-32 bg-surface">
+      <div className="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+        <div className="text-center mb-20">
+          <h2 className="font-headline-lg text-headline-lg mb-4">Build, Launch, and Scale Your Digital Products</h2>
+          <p className="text-text-muted max-w-2xl mx-auto">Comprehensive solutions tailored to the needs of modern enterprises, from neural network architecture to front-end excellence.</p>
         </div>
-        <div className="flex flex-wrap mt-10 lg:mt-20 justify-center">
-          {features.map((feature, index) => (
-            <div key={index} className="w-full sm:w-1/2 lg:w-1/3 p-4">
-              <div className="bg-neutral-900 rounded-lg p-6 h-full transition-all duration-300 hover:bg-neutral-800 hover:shadow-lg hover:shadow-orange-500/10">
-                <div className="flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left">
-                  <div className="flex h-12 w-12 p-3 bg-gradient-to-r from-orange-500 to-orange-700 text-white justify-center items-center rounded-full shrink-0">
-                    {feature.icon}
-                  </div>
-                  <div className="mt-4 sm:mt-0 sm:ml-4">
-                    <h5 className="mt-1 mb-2 text-xl text-white">{feature.text}</h5>
-                    <p className="text-md text-neutral-400">{feature.description}</p>
-                  </div>
-                </div>
-              </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+          {/* Service Card 1 */}
+          <div className="glass-card p-8 rounded-xl relative overflow-hidden group">
+            <div className="scan-line"></div>
+            <div className="mb-6 inline-flex p-3 rounded-lg bg-primary/10 text-primary">
+              <span className="material-symbols-outlined text-3xl">psychology</span>
             </div>
-          ))}
+            <h3 className="font-headline-md text-headline-md mb-4">AI &amp; Machine Learning</h3>
+            <p className="text-text-muted mb-6">Integrating sophisticated LLMs and predictive analytics into your core business logic for smarter automation.</p>
+            <ul className="space-y-3 font-label-mono text-sm text-on-surface-variant">
+              <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary"></span> Natural Language Processing</li>
+              <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary"></span> Custom Model Training</li>
+              <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary"></span> AI-Driven Insights</li>
+            </ul>
+          </div>
+          {/* Service Card 2 */}
+          <div className="glass-card p-8 rounded-xl relative overflow-hidden group">
+            <div className="scan-line" style={{animationDelay: "1s"}}></div>
+            <div className="mb-6 inline-flex p-3 rounded-lg bg-secondary/10 text-secondary">
+              <span className="material-symbols-outlined text-3xl">terminal</span>
+            </div>
+            <h3 className="font-headline-md text-headline-md mb-4">Full-Stack Development</h3>
+            <p className="text-text-muted mb-6">Enterprise-grade web applications built with high-performance frameworks and scalable cloud architectures.</p>
+            <ul className="space-y-3 font-label-mono text-sm text-on-surface-variant">
+              <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary"></span> Microservices Arch</li>
+              <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary"></span> React &amp; Next.js Experts</li>
+              <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-secondary"></span> Real-time Data Viz</li>
+            </ul>
+          </div>
+          {/* Service Card 3 */}
+          <div className="glass-card p-8 rounded-xl relative overflow-hidden group">
+            <div className="scan-line" style={{animationDelay: "2s"}}></div>
+            <div className="mb-6 inline-flex p-3 rounded-lg bg-tertiary-container/10 text-tertiary-container">
+              <span className="material-symbols-outlined text-3xl">cloud_done</span>
+            </div>
+            <h3 className="font-headline-md text-headline-md mb-4">Cloud Infrastructure</h3>
+            <p className="text-text-muted mb-6">Optimizing your digital foundation for peak performance, security, and global accessibility.</p>
+            <ul className="space-y-3 font-label-mono text-sm text-on-surface-variant">
+              <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span> DevOps &amp; CI/CD</li>
+              <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span> Zero Trust Security</li>
+              <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span> AWS/Azure/GCP</li>
+            </ul>
+          </div>
         </div>
       </div>
-    </Animated>
-  );
-};
+    </section>
+  )
+}
 
 export default FeatureSection;

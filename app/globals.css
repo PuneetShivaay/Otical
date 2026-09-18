@@ -2,11 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: #000000;
-  color: #FFFFFF;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Hanken+Grotesk:wght@600;700;800&display=swap');
+
+@layer base {
+  body {
+    @apply bg-neutral-950 text-neutral-300 font-sans;
+  }
 }
 
-main {
-  background-color: transparent;
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-orange-600;
+  }
+
+  .glow-border {
+    @apply relative border border-glass-border before:absolute before:inset-0 before:p-px before:rounded-xl before:bg-gradient-to-b before:from-orange-500 before:to-transparent before:opacity-0 hover:before:opacity-100 transition-opacity;
+  }
+
+  .glow-shadow {
+    @apply shadow-xl shadow-orange-900/20;
+  }
 }

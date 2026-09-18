@@ -18,9 +18,9 @@ function Projects() {
         </div>
       </div>
       <div className="mt-20 max-w-7xl mx-auto px-4">
-        <div className="flex flex-wrap justify-center gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {projects.map((project, index) => (
-            <div key={index} className="w-full md:w-[45%] lg:w-[30%] p-2">
+            <div key={index} className="p-2">
               <div className="bg-neutral-800/50 p-6 rounded-2xl border border-neutral-700 h-full flex flex-col transition-all duration-300 hover:border-orange-500 hover:shadow-2xl hover:shadow-orange-500/20">
                 <img
                   className="rounded-lg border border-neutral-600 shadow-md mx-auto h-full w-full object-cover transition-transform duration-300 hover:scale-105"
