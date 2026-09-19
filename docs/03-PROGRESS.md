@@ -220,3 +220,9 @@ class that hides real content from clients and crawlers.
 - [ ] Not yet migrated to tokens: `components/{About,Contact}` (Phase 5)
 - [ ] `framer-motion` is still a dependency, used only by the legacy
       `components/Contact/ContactForm.jsx` — removable once Phase 5 rebuilds it
+- [ ] `/work/[slug]` and `/services/[service]` correctly 404 on unknown slugs, but
+      render the **stock Next.js 404 body**. Needs a branded `app/not-found.jsx`
+      with routes back into the site (Phase 6)
+- [ ] `sharp` not installed — `next start` warns that production image
+      optimisation will be slower. Vercel provides it, so this only affects local
+      production runs; install if self-hosting (Phase 6)

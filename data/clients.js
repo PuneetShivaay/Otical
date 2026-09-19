@@ -20,7 +20,7 @@ export const clients = [
   { name: 'Inventeno', logo: '/images/clients/Inventeno.png', caseStudySlug: null },
   { name: 'Kasaya Spices', logo: '/images/clients/KasayaSpices.png', caseStudySlug: null },
   { name: 'MMP', logo: '/images/clients/MMP.png', caseStudySlug: null },
-  { name: 'MindPick', logo: '/images/clients/MindPick.png', caseStudySlug: null },
+  { name: 'MindPick', logo: '/images/clients/MindPick.png', caseStudySlug: 'mindpick-publishers' },
   { name: 'Mohak', logo: '/images/clients/Mohak.png', caseStudySlug: 'mohak-the-vibe' },
   { name: 'RecCloth', logo: '/images/clients/RecCloth.png', caseStudySlug: null },
   { name: 'Renere', logo: '/images/clients/Renere.png', caseStudySlug: null },

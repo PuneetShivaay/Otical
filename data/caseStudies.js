@@ -23,6 +23,16 @@
  * images        string[] Additional screenshots
  * featured      boolean  Show on the home page
  *
+ * FEATURED vs ALL
+ * ---------------
+ * The home page renders `featuredCaseStudies` (featured: true) — a curated
+ * shortlist, because the home page is a pitch, not an archive. `/work` renders
+ * every entry. So `featured` is the one switch that decides whether a study
+ * appears on the home page; nothing else needs changing.
+ *
+ * Keep the featured count EVEN. The home grid is two columns, so an odd number
+ * leaves a ragged half-empty row.
+ *
  * ⚠️ RULE: never invent metrics or testimonials. An empty `results` array is
  * fine — the renderer simply hides that block. Fabricated numbers are a
  * credibility risk. See docs/03-PROGRESS.md.
@@ -112,6 +122,35 @@ export const caseStudies = [
     results: [],
     techStack: [],
     cover: '/images/clients/Mohak.png',
+    images: [],
+    featured: true,
+  },
+
+  {
+    slug: 'mindpick-publishers',
+    client: 'MindPick Publishers',
+    title: 'A publishing house with a home of its own',
+    summary:
+      'A website for an independent publisher — somewhere authors and readers can find the catalogue, and somewhere submissions can arrive properly.',
+    services: ['web-development', 'ui-ux-design'],
+    industry: 'Publishing',
+    year: '2024',
+    liveUrl: 'https://mindpickpublishers.com',
+    // TODO(client): confirm the narrative below. Written from the brief only —
+    // scope, dates, catalogue size and submission volume need checking.
+    challenge:
+      'A publishing house is judged by how it presents other people’s work. MindPick needed a site that treats the catalogue as the main event, and that gives prospective authors a clear, credible route to submit.',
+    solution:
+      'Otical built a site organised around the catalogue, with each title given room to be presented properly, and a submission path that is easy to find from anywhere on the site.',
+    approach: [
+      'Structured the site around the catalogue rather than around the company',
+      'Gave individual titles a presentation worth linking to',
+      'Made the submission route obvious for prospective authors',
+      'Built for readers arriving on mobile from social and search',
+    ],
+    results: [],
+    techStack: [],
+    cover: '/images/clients/MindPick.png',
     images: [],
     featured: true,
   },
