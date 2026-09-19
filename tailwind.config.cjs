@@ -118,7 +118,10 @@ module.exports = {
         },
       },
       animation: {
-        marquee: 'marquee 40s linear infinite',
+        // 80s, not 40s: ClientMarquee renders the logo set 4 times, so a -50%
+        // translation now covers TWO copies' width. Halving the speed keeps the
+        // logos moving at the same rate they did with a 2-copy track.
+        marquee: 'marquee 80s linear infinite',
         reveal: 'reveal 500ms cubic-bezier(0.22, 1, 0.36, 1) backwards',
         'loading-bar': 'loading-bar 1.2s ease-in-out infinite',
       },
