@@ -1,0 +1,12 @@
+{
+  // VS Code's built-in CSS validator doesn't understand Tailwind's @tailwind
+  // and @apply at-rules, so it reports false "Unknown at rule" errors.
+  // Tailwind's PostCSS plugin processes them correctly at build time.
+  "css.lint.unknownAtRules": "ignore",
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+  ]
+}

@@ -1,31 +1,21 @@
-'use client';
-
+/**
+ * Route-change loading indicator.
+ *
+ * Previously a client component using styled-jsx with a hardcoded `#f97316`
+ * (Tailwind orange-500 — the *old* brand colour, wrong since Phase 0). It is
+ * now a server component using the brand gradient and the shared `marquee`
+ * keyframe from tailwind.config.cjs.
+ *
+ * No 'use client', so this ships zero JavaScript.
+ */
 export default function Loading() {
   return (
-    <div style={{
-      width: '100%',
-      height: '3px',
-      position: 'relative',
-      overflow: 'hidden',
-    }}>
-      <div style={{
-        position: 'absolute',
-        height: '100%',
-        width: '100%',
-        backgroundColor: '#f97316', // Orange color from Tailwind's orange-500
-        animation: 'loader-bar 1.5s linear infinite',
-        transformOrigin: 'left',
-      }}></div>
-      <style jsx>{`
-        @keyframes loader-bar {
-          0% {
-            transform: translateX(-100%);
-          }
-          100% {
-            transform: translateX(100%);
-          }
-        }
-      `}</style>
+    <div
+      className="h-0.5 w-full overflow-hidden bg-surface-2"
+      role="status"
+      aria-label="Loading page"
+    >
+      <div className="h-full w-1/3 animate-loading-bar bg-gradient-brand" />
     </div>
   );
 }
