@@ -88,7 +88,7 @@ export default function ServicePage({ params }) {
 
         <div className="mt-8 max-w-3xl">
           <div className="flex items-center gap-3">
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-border-subtle bg-surface text-brand">
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-border-subtle bg-surface text-accent">
               <Icon name={service.icon} size={20} />
             </span>
             {pillar && <Badge tone="brand">{pillar.title}</Badge>}
@@ -121,7 +121,7 @@ export default function ServicePage({ params }) {
           <div className="grid gap-px overflow-hidden rounded-2xl border border-border-subtle bg-border-subtle sm:grid-cols-2">
             {service.outcomes.map((outcome) => (
               <div key={outcome} className="flex gap-3 bg-bg p-6">
-                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand/10 text-brand">
+                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
                   <Icon name="Check" size={12} />
                 </span>
                 <p className="leading-relaxed text-fg-muted">{outcome}</p>
@@ -245,7 +245,7 @@ export default function ServicePage({ params }) {
           <div className="mt-10 grid gap-4 sm:grid-cols-3">
             {related.map((item) => (
               <Card key={item.slug} href={serviceHref(item.slug)} className="h-full">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border-subtle bg-surface-2 text-brand">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border-subtle bg-surface-2 text-accent">
                   <Icon name={item.icon} size={18} />
                 </div>
                 <h3 className="mt-4 font-semibold text-fg">{item.title}</h3>

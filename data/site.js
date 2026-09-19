@@ -24,8 +24,29 @@ export const navItems = [
   { label: 'Contact', href: '/contact' },
 ];
 
+/**
+ * Social profiles. `icon` is a lucide-react name — it must exist in the
+ * iconMap in components/ui/Icon.jsx or nothing renders.
+ *
+ * Order is deliberate: LinkedIn and GitHub first because they carry the most
+ * weight for a B2B technology buyer, then the audience channels, then Linktree
+ * last as the catch-all.
+ *
+ * NOTE ON X: lucide ships `Twitter` (the old bird), not the X wordmark —
+ * lucide's policy is to avoid brand marks it can't license cleanly. The label
+ * says "X" so the accessible name is correct; only the glyph is dated. If that
+ * bothers you, the fix is a hand-rolled inline SVG, not a different icon.
+ *
+ * Linktree has no lucide icon at all, so it uses the generic `Link2`.
+ */
 export const socialLinks = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/company/oticalofficial', icon: 'Linkedin' },
+  { label: 'GitHub', href: 'https://github.com/oticalofficial', icon: 'Github' },
+  { label: 'YouTube', href: 'https://www.youtube.com/@oticalofficial', icon: 'Youtube' },
+  { label: 'Instagram', href: 'https://www.instagram.com/oticalofficial', icon: 'Instagram' },
+  { label: 'Facebook', href: 'https://www.facebook.com/otical', icon: 'Facebook' },
+  { label: 'X', href: 'https://x.com/oticalofficial', icon: 'Twitter' },
+  { label: 'Linktree', href: 'https://linktr.ee/otical', icon: 'Link2' },
 ];
 
 /** Contact methods shown on the contact page. Icons are lucide-react names. */

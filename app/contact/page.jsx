@@ -49,7 +49,7 @@ export default function ContactPage() {
           <aside className="space-y-4">
             {contactInfo.map((item) => (
               <Card key={item.title} className="flex items-start gap-4">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border-subtle bg-surface-2 text-brand">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border-subtle bg-surface-2 text-accent">
                   <Icon name={item.icon} size={18} />
                 </span>
                 <div className="min-w-0">

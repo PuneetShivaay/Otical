@@ -81,7 +81,7 @@ export default function AboutPage() {
           {companyValues.map((value, index) => (
             <Reveal key={value.title} delay={(index % 2) * 0.05}>
               <Card className="h-full bg-bg">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border-subtle bg-surface-2 text-brand">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border-subtle bg-surface-2 text-accent">
                   <Icon name={value.icon} size={18} />
                 </div>
                 <h3 className="mt-4 font-semibold text-fg">{value.title}</h3>

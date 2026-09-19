@@ -38,7 +38,13 @@ export default function ServicesOverview() {
                 {pillarServices.map((service, index) => (
                   <Reveal key={service.slug} delay={index * 0.05}>
                     <Card href={serviceHref(service.slug)} className="group h-full">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border-subtle bg-surface-2 text-brand">
+                      {/*
+                        Icons are `accent` (orange), links are `brand` (red).
+                        Both are logo colours — the split exists so the two
+                        stop competing: orange labels the category, red marks
+                        the thing you can click. See docs/03-PROGRESS.md.
+                      */}
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border-subtle bg-surface-2 text-accent">
                         <Icon name={service.icon} size={18} />
                       </div>
                       <h4 className="mt-4 font-semibold text-fg">{service.title}</h4>

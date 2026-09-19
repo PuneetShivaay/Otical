@@ -54,7 +54,7 @@ export default function ServicesPage() {
                   {pillarServices.map((service, index) => (
                     <Reveal key={service.slug} delay={(index % 3) * 0.05}>
                       <Card href={serviceHref(service.slug)} className="group h-full">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border-subtle bg-surface-2 text-brand">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border-subtle bg-surface-2 text-accent">
                           <Icon name={service.icon} size={18} />
                         </div>
                         <h3 className="mt-4 font-semibold text-fg">{service.title}</h3>
