@@ -13,8 +13,8 @@ Branch: `devdeploy/future` · Started: 2026-09-19
 | **2** | Home page redesign + Navbar/Footer + theme toggle | ✅ Done |
 | **3** | Case studies engine — `/work/[slug]` detail template | ✅ Done |
 | **4** | Services — index + deep service template | ✅ Done |
-| **5** | About + Contact (qualified form, hardened API) | ⬜ Next |
-| **6** | SEO + performance pass (metadata, OG, JSON-LD, Lighthouse 95+) | ⬜ Not started |
+| **5** | About + Contact (qualified form, hardened API) | ✅ Done |
+| **6** | SEO + performance pass (metadata, OG, JSON-LD, Lighthouse 95+) | ⬜ Next |
 
 ---
 
@@ -166,6 +166,11 @@ Format: **Decision** — reason — date
 | FAQs use native `<details>`, not a JS accordion | Zero JS, keyboard + `Ctrl+F` + crawler friendly by default | 2026-09-19 |
 | `@/` path alias | Replaces `../../../` imports; standard Next.js convention | 2026-09-19 |
 | `Reveal` is pure CSS; no Framer Motion, no scroll trigger | Scroll-triggered reveals shipped content at `opacity:0`, so a section could stay blank if JS failed. Decoration must never gate content. Also cut 41 kB | 2026-09-19 |
+| Client components import modules directly, never barrels | A barrel re-export drags every sibling module into the client bundle — measured at 14 kB on every page | 2026-09-19 |
+| Contact form options passed as props from the server | Keeps `data/services.js` (~28 kB) out of the browser; the client only needs the labels | 2026-09-19 |
+| Contact form asks for service, budget and timeline (all optional) | "Hi, need a website" costs a round-trip before anyone knows if the project is real | 2026-09-19 |
+| Inline `role="status"` instead of toast notifications | Announced to screen readers, cannot be missed, and removes a dependency | 2026-09-19 |
+| "ISO-certified" claim pulled from the About page pending proof | A verifiable legal claim. Isolated in `data/site.js` behind `credentials.verified`, so it is neither silently deleted nor silently republished | 2026-09-19 |
 
 ---
 
@@ -205,6 +210,48 @@ class that hides real content from clients and crawlers.
 
 ---
 
+## Phase 5 checklist — About + Contact
+
+- [x] `/about` rebuilt on tokens — stats derived from the data files, mission and
+      vision shown once (the old page printed the mission paragraph twice)
+- [x] `components/sections/Team.jsx` — `next/image`, clearing the last build warning
+- [x] `/contact` rebuilt — form plus direct contact details side by side
+- [x] Qualified enquiry form — service, budget and timeline, all optional
+- [x] Inline `role="status"` feedback replaces `react-hot-toast`
+- [x] `/api/send` hardened — honeypot, validation, length caps, per-IP rate limit,
+      header-injection stripping, and the Resend `error` field actually checked
+- [x] Legacy `components/{About,Contact}` deleted
+- [x] `framer-motion` and `react-hot-toast` removed from dependencies
+- [x] Abuse protections verified against a running server, not assumed:
+      empty body 400 · bad email 400 · honeypot 200 (silent) · 4th request 429 ·
+      6 000-char message 400
+
+### The barrel-import trap (cost 14 kB, found by measuring)
+
+Phase 5 first built at **115 kB**, up from 101 kB, on *every* page. Three separate
+causes, each found by measuring rather than guessing — the first two hypotheses
+were wrong:
+
+1. `Navbar` (a client component in the root layout) imported `Button` from the
+   `@/components/ui` barrel. A barrel re-exports everything, so `Icon` and its
+   whole lucide list joined the client bundle on every page.
+2. The same file imported from the `@/data` barrel, dragging every data file in.
+3. **The real cost:** `ContactForm` imported `services` to populate a `<select>`.
+   That pulled all of `data/services.js` — descriptions, capabilities, FAQs,
+   stacks, ~28 kB — into a client chunk webpack then shared across all pages.
+
+Fix: client components import **directly**, never via a barrel; and the contact
+page derives the option labels on the server and passes plain string arrays down
+as props. Verified with a grep for `OWASP` across `.next/static/chunks` — no
+service data reaches the browser.
+
+**Rule: in a client component, import the module, not the barrel.** Server
+components may use barrels freely.
+
+Result: 115 kB → **106 kB**, with `/about` and `/contact` now fully rebuilt.
+
+---
+
 ## Known issues inherited from the old site
 
 - [x] ~~Fabricated testimonials~~ — deleted in Phase 2; only `data/testimonials.js` is used
@@ -212,17 +259,36 @@ class that hides real content from clients and crawlers.
 - [x] ~~Expiring `lh3.googleusercontent.com/aida-...` image URLs~~ — components deleted
 - [x] ~~Footer links pointing to `#`~~ — rebuilt with real links
 - [x] ~~Dead weight: `firebase.json`, `@emailjs/browser`, slick, material-tailwind~~ — removed
-- [ ] Raw `<img>` in `components/About/Team.jsx` (Phase 5)
-- [ ] Per-page SEO metadata still missing on `/about`, `/contact` (Phase 6)
-- [ ] `/api/send` has no spam / rate-limit protection (Phase 5)
+- [x] ~~Raw `<img>` in `components/About/Team.jsx`~~ — `next/image` in Phase 5
+- [x] ~~`/api/send` has no spam / rate-limit protection~~ — hardened in Phase 5
+- [x] ~~Not yet migrated to tokens: `components/{About,Contact}`~~ — rebuilt in Phase 5
+- [x] ~~`framer-motion` only used by the legacy ContactForm~~ — dependency removed
+- [ ] Per-page SEO metadata still missing on a few routes (Phase 6)
 - [ ] `public/sitemap.xml` is hand-maintained and now stale — replace with `app/sitemap.js` (Phase 6)
-- [ ] `VITE_*` keys still in `.env` (Phase 5)
-- [ ] Not yet migrated to tokens: `components/{About,Contact}` (Phase 5)
-- [ ] `framer-motion` is still a dependency, used only by the legacy
-      `components/Contact/ContactForm.jsx` — removable once Phase 5 rebuilds it
+- [ ] `VITE_*` keys still in `.env` — legacy from the Vite build (Phase 6)
+- [ ] `app/loading.jsx` still hardcodes `#f97316` (old orange) and uses `styled-jsx`
+      rather than tokens (Phase 6)
 - [ ] `/work/[slug]` and `/services/[service]` correctly 404 on unknown slugs, but
       render the **stock Next.js 404 body**. Needs a branded `app/not-found.jsx`
       with routes back into the site (Phase 6)
 - [ ] `sharp` not installed — `next start` warns that production image
       optimisation will be slower. Vercel provides it, so this only affects local
       production runs; install if self-hosting (Phase 6)
+- [ ] **Rate limiting is per-instance, not global.** Serverless instances do not
+      share memory, so a distributed attacker exceeds the limit. Fine for casual
+      abuse; move to Upstash/Vercel KV if this endpoint is ever targeted
+
+---
+
+## ⚠️ Awaiting client confirmation
+
+These are flagged in code with `TODO(client)` and must be resolved before launch:
+
+| Item | Where | Why it matters |
+|---|---|---|
+| **ISO certification** | `data/site.js` → `credentials` | The old site claimed "ISO-certified". Verifiable legal claim — needs the standard and certificate number, or it stays hidden |
+| **Budget bands** | `data/site.js` → `enquiryBudgets` | Placeholder figures. Too high scares off good small projects; too low wastes your time |
+| **Service copy** | `data/services.js` | In-house draft, especially the `outcomes` arrays |
+| **Case study narratives** | `data/caseStudies.js` | Written from brief only for Udaratva, Mohak, Guruphoria, MindPick |
+| **Guruphoria scope** | `data/caseStudies.js` | Is the social media work ongoing? A retainer is a much stronger story |
+| **Sending domain** | `app/api/send/route.js` | Still `onboarding@resend.dev`. A verified domain improves deliverability and looks professional |

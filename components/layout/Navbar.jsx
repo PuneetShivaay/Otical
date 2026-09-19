@@ -5,8 +5,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
-import { navItems, site } from '@/data';
-import { Button } from '@/components/ui';
+// Both imports below are DIRECT, not via a barrel ('@/data' or
+// '@/components/ui'). Navbar is a client component in the root layout, so
+// anything its imports reach is bundled into every page. A barrel re-exports
+// every module in the folder, which would ship services.js, caseStudies.js and
+// the whole icon map to the browser just to render five nav links.
+import { navItems, site } from '@/data/site';
+import Button from '@/components/ui/Button';
 import ThemeToggle from './ThemeToggle';
 import { cn } from '@/lib/utils';
 

@@ -30,6 +30,11 @@ import {
   ArrowRight,
   ArrowLeft,
   Check,
+  Users,
+  MessageSquare,
+  KeyRound,
+  LifeBuoy,
+  TriangleAlert,
 } from 'lucide-react';
 
 const iconMap = {
@@ -48,6 +53,11 @@ const iconMap = {
   ArrowRight,
   ArrowLeft,
   Check,
+  Users,
+  MessageSquare,
+  KeyRound,
+  LifeBuoy,
+  TriangleAlert,
 };
 
 /** Usage: <Icon name={service.icon} className="h-5 w-5" /> */

@@ -8,7 +8,18 @@
  * See docs/02-ARCHITECTURE.md for the rules governing this folder.
  */
 
-export { site, navItems, socialLinks, contactInfo, companyStory, processSteps } from './site';
+export {
+  site,
+  navItems,
+  socialLinks,
+  contactInfo,
+  companyStory,
+  companyValues,
+  credentials,
+  enquiryBudgets,
+  enquiryTimelines,
+  processSteps,
+} from './site';
 export { services, servicePillars, getServiceBySlug, serviceHref } from './services';
 export { clients } from './clients';
 export { caseStudies, featuredCaseStudies, getCaseStudyBySlug, caseStudyHref } from './caseStudies';
