@@ -4,7 +4,7 @@
  */
 
 export const clients = [
-  { name: 'Udaratva', logo: '/images/clients/UdaratvaLogo.png', caseStudySlug: null },
+  { name: 'Udaratva', logo: '/images/clients/UdaratvaLogo.png', caseStudySlug: 'udaratva' },
   { name: 'PSPower', logo: '/images/clients/PSPower.png', caseStudySlug: null },
   { name: 'PetMets', logo: '/images/clients/PetMets.png', caseStudySlug: 'petmets' },
   { name: 'Ranak Energy', logo: '/images/clients/RanakEnergy.png', caseStudySlug: null },
@@ -16,12 +16,12 @@ export const clients = [
   { name: 'GangwarErDr', logo: '/images/clients/GangwarErDr.png', caseStudySlug: null },
   { name: 'GrowthFreak', logo: '/images/clients/GrowthFreak.png', caseStudySlug: null },
   { name: 'BlackBird', logo: '/images/clients/BlackBird.png', caseStudySlug: null },
-  { name: 'Guruphoria', logo: '/images/clients/Guruphoria.png', caseStudySlug: null },
+  { name: 'Guruphoria', logo: '/images/clients/Guruphoria.png', caseStudySlug: 'guruphoria' },
   { name: 'Inventeno', logo: '/images/clients/Inventeno.png', caseStudySlug: null },
   { name: 'Kasaya Spices', logo: '/images/clients/KasayaSpices.png', caseStudySlug: null },
   { name: 'MMP', logo: '/images/clients/MMP.png', caseStudySlug: null },
   { name: 'MindPick', logo: '/images/clients/MindPick.png', caseStudySlug: null },
-  { name: 'Mohak', logo: '/images/clients/Mohak.png', caseStudySlug: null },
+  { name: 'Mohak', logo: '/images/clients/Mohak.png', caseStudySlug: 'mohak-the-vibe' },
   { name: 'RecCloth', logo: '/images/clients/RecCloth.png', caseStudySlug: null },
   { name: 'Renere', logo: '/images/clients/Renere.png', caseStudySlug: null },
   { name: 'Sahaj Sahyog', logo: '/images/clients/SahajSahyog.png', caseStudySlug: null },
