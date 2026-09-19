@@ -1,50 +1,55 @@
-'use client';
-
-import { motion, useReducedMotion } from 'framer-motion';
-
 /**
- * The ONLY entrance animation in the project.
+ * Entrance animation — CSS only, no JavaScript.
  *
- * Centralising motion here means:
- *   - `prefers-reduced-motion` is honoured in exactly one place, so it can
- *     never be forgotten in a section,
- *   - timing and easing stay consistent site-wide,
- *   - `'use client'` stays at the leaf, so parent sections remain Server
- *     Components and ship no JS.
+ * ---------------------------------------------------------------------------
+ * HISTORY: two bugs led here, both worth remembering
+ * ---------------------------------------------------------------------------
+ * v1 used Framer Motion `whileInView` with `initial={{ opacity: 0 }}`. The
+ * server therefore shipped real content as:
  *
- * Rules it enforces (docs/01-DESIGN-SYSTEM.md):
- *   - animates only `transform` and `opacity` — never layout properties,
- *   - runs once; it does not replay when scrolling back up,
- *   - short and subtle. Motion should feel considered, not busy.
+ *     <div style="opacity:0;transform:translateY(16px)">…</div>
  *
- * `delay` is for staggering siblings — keep it under ~0.3s so nothing feels slow.
+ * Content was INVISIBLE UNTIL JAVASCRIPT RAN. Observed live on
+ * /services/cybersecurity, where the "What this includes" section rendered as
+ * a tall blank gap — the text was in the DOM and in view-source the whole time.
+ *
+ * v2 kept scroll-triggering but flipped the default to visible and hid only
+ * after mount. Safer, but content still *depended on JS to be revealed*, and
+ * the hydration gap was visible as a delay on load.
+ *
+ * v3 (this one) removes the dependency completely. The animation is a plain
+ * CSS keyframe that runs on load. No 'use client', no hydration, no observer,
+ * no timers, no JS of any kind. If CSS loads, content is visible; if the
+ * animation never runs, `animation-fill-mode` leaves it visible anyway.
+ *
+ * THE RULE: an entrance animation is decoration. Decoration must never gate
+ * content. Never render content hidden-by-default.
+ *
+ * ---------------------------------------------------------------------------
+ * TRADE-OFF
+ * ---------------------------------------------------------------------------
+ * Animations now trigger on page load rather than on scroll, so content far
+ * down the page has finished animating before it is scrolled to. That is a
+ * deliberate trade: a subtle 500ms fade is not worth a class of bug that can
+ * blank a section, and it also removes ~34 kB of Framer Motion from the
+ * client bundle.
+ *
+ * `prefers-reduced-motion` is handled globally in app/globals.css.
+ *
+ * @param {number} delay - stagger for siblings, in seconds. Keep under ~0.3s.
  */
 export default function Reveal({
   children,
   delay = 0,
-  y = 16,
   className,
-  as = 'div',
+  as: Tag = 'div',
 }) {
-  const prefersReducedMotion = useReducedMotion();
-
-  const MotionTag = motion[as] ?? motion.div;
-
-  // Render a plain, immediately-visible element for reduced-motion users.
-  if (prefersReducedMotion) {
-    const Tag = as;
-    return <Tag className={className}>{children}</Tag>;
-  }
-
   return (
-    <MotionTag
-      className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
+    <Tag
+      className={className ? `animate-reveal ${className}` : 'animate-reveal'}
+      style={delay ? { animationDelay: `${delay}s` } : undefined}
     >
       {children}
-    </MotionTag>
+    </Tag>
   );
 }

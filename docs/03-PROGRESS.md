@@ -165,6 +165,43 @@ Format: **Decision** — reason — date
 | Service copy drafted in-house, flagged "pending client review" | Unblocks the build now; the marker prevents draft copy silently becoming final | 2026-09-19 |
 | FAQs use native `<details>`, not a JS accordion | Zero JS, keyboard + `Ctrl+F` + crawler friendly by default | 2026-09-19 |
 | `@/` path alias | Replaces `../../../` imports; standard Next.js convention | 2026-09-19 |
+| `Reveal` is pure CSS; no Framer Motion, no scroll trigger | Scroll-triggered reveals shipped content at `opacity:0`, so a section could stay blank if JS failed. Decoration must never gate content. Also cut 41 kB | 2026-09-19 |
+
+---
+
+## Bug: sections rendering blank (`Reveal`)
+
+Reported on `/services/cybersecurity` — "What this includes" showed a heading
+above a tall empty gap. Other services looked fine, which made it look like a
+data problem. It was not: the data was complete and the text was present in
+view-source the whole time.
+
+The served HTML was:
+
+```html
+<div style="opacity:0;transform:translateY(16px)">
+  <h3>Vulnerability assessment</h3>
+```
+
+`Reveal` used Framer Motion `whileInView` with `initial={{ opacity: 0 }}`, so
+**content shipped invisible and required JavaScript to be revealed**. Cards that
+happened to be in the viewport at load revealed immediately (Web Development);
+cards further down did not when the observer never fired. It affected 8 pages.
+
+Two attempts:
+
+1. Keep scroll-triggering, but default to visible and hide only after mount.
+   Safer, but content still depended on JS to be revealed and the hydration gap
+   was visible as a delay on load. Rejected.
+2. **Remove the JS dependency entirely.** `Reveal` is now a CSS keyframe
+   (`animation-fill-mode: backwards`). No `'use client'`, no observer, no timers.
+   If the animation never runs, content is visible anyway.
+
+Trade-off accepted: animations run on load, not on scroll, so content low on the
+page finishes animating before it is reached. A 500ms fade is not worth a bug
+class that hides real content from clients and crawlers.
+
+**Rule: never render content hidden-by-default.** First Load JS 142 kB → 101 kB.
 
 ---
 
@@ -176,8 +213,10 @@ Format: **Decision** — reason — date
 - [x] ~~Footer links pointing to `#`~~ — rebuilt with real links
 - [x] ~~Dead weight: `firebase.json`, `@emailjs/browser`, slick, material-tailwind~~ — removed
 - [ ] Raw `<img>` in `components/About/Team.jsx` (Phase 5)
-- [ ] Per-page SEO metadata still missing on `/about`, `/contact`, `/services` (Phase 6)
+- [ ] Per-page SEO metadata still missing on `/about`, `/contact` (Phase 6)
 - [ ] `/api/send` has no spam / rate-limit protection (Phase 5)
 - [ ] `public/sitemap.xml` is hand-maintained and now stale — replace with `app/sitemap.js` (Phase 6)
 - [ ] `VITE_*` keys still in `.env` (Phase 5)
-- [ ] Not yet migrated to tokens: `components/{About,Contact,Services}` (Phases 4–5)
+- [ ] Not yet migrated to tokens: `components/{About,Contact}` (Phase 5)
+- [ ] `framer-motion` is still a dependency, used only by the legacy
+      `components/Contact/ContactForm.jsx` — removable once Phase 5 rebuilds it

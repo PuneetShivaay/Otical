@@ -104,9 +104,17 @@ module.exports = {
           from: { transform: 'translateX(0)' },
           to: { transform: 'translateX(-50%)' },
         },
+        // Used by components/ui/Reveal.jsx. `backwards` fill applies the
+        // `from` state during animation-delay so staggered siblings do not
+        // flash before their turn. Content ends visible no matter what.
+        reveal: {
+          from: { opacity: '0', transform: 'translateY(16px)' },
+          to: { opacity: '1', transform: 'none' },
+        },
       },
       animation: {
         marquee: 'marquee 40s linear infinite',
+        reveal: 'reveal 500ms cubic-bezier(0.22, 1, 0.36, 1) backwards',
       },
     },
   },
