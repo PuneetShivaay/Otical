@@ -2,16 +2,32 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-export async function POST(req, res) {
+/*
+ * The Resend client is created lazily, INSIDE the handler.
+ *
+ * Previously it was constructed at module scope, so `next build` crashed with
+ * "Missing API key" on any machine/CI without RESEND_API_KEY set — the build
+ * evaluates modules while collecting page data. Creating it per-request keeps
+ * the build environment-independent.
+ */
+export async function POST(req) {
   const { email, subject, message } = await req.json();
-  console.log("Received request to send email:", { email, subject, message });
+
+  if (!process.env.RESEND_API_KEY) {
+    console.error("RESEND_API_KEY is not configured");
+    return NextResponse.json(
+      { error: "Email service is not configured." },
+      { status: 500 }
+    );
+  }
 
   try {
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
     const data = await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: ['oticalmail@gmail.com'],
+      replyTo: email,
       subject: subject,
       react: (
         <>
@@ -21,10 +37,12 @@ export async function POST(req, res) {
         </>
       ),
     });
-    console.log("Email sent successfully:", data);
+
     return NextResponse.json(data);
   } catch (error) {
     console.error("Error sending email:", error);
-    return NextResponse.json({ error: error.message });
+    // Return a real error status — the old version returned 200 on failure,
+    // which made client-side error handling unreliable.
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

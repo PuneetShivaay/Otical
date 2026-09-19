@@ -1,5 +1,5 @@
-import { about } from "../../constants";
-import { Linkedin, Twitter, Github } from 'lucide-react';
+import { team } from "@/data";
+import { Linkedin } from 'lucide-react';
 
 function Team() {
     return (
@@ -20,9 +20,9 @@ function Team() {
             </div>
             <div className="mt-20 max-w-7xl mx-auto px-4">
                 <div className="flex flex-wrap justify-center gap-8">
-                    {about.team.map((member, index) => (
+                    {team.map((member) => (
                         <div 
-                            key={index} 
+                            key={member.name} 
                             className="w-full sm:w-1/2 lg:w-1/4 p-2"
                         >
                             <div className="bg-neutral-800/50 p-6 rounded-2xl border border-neutral-700 h-full transition-all duration-300 hover:border-orange-500 hover:shadow-2xl hover:shadow-orange-500/20 transform hover:-translate-y-2">
@@ -34,17 +34,14 @@ function Team() {
                                     />
                                     <p className="text-2xl mb-1 text-white">{member.name}</p>
                                     <p className="mb-4 text-orange-400 tracking-tight">
-                                        {member.title}
+                                        {member.role}
                                     </p>
                                     <div className="flex justify-center space-x-5 mt-4">
-                                        <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-orange-500 transition-transform duration-300 transform hover:scale-125">
+                                        {/* Only LinkedIn is real. The old data pointed the
+                                            Twitter and GitHub icons at LinkedIn URLs too,
+                                            which misled visitors — removed. */}
+                                        <a href={member.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${member.name} on LinkedIn`} className="text-neutral-400 hover:text-orange-500 transition-transform duration-300 transform hover:scale-125">
                                             <Linkedin size={20} />
-                                        </a>
-                                        <a href={member.social.twitter} target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-orange-500 transition-transform duration-300 transform hover:scale-125">
-                                            <Twitter size={20} />
-                                        </a>
-                                        <a href={member.social.github} target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-orange-500 transition-transform duration-300 transform hover:scale-125">
-                                            <Github size={20} />
                                         </a>
                                     </div>
                                 </div>

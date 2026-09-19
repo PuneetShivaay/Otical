@@ -1,6 +1,7 @@
 'use client';
 import React from "react";
-import { contact } from "../../constants";
+import { contactInfo } from "@/data";
+import Icon from "@/components/ui/Icon";
 import ContactForm from "./ContactForm";
 
 function Contact() {
@@ -20,15 +21,17 @@ function Contact() {
         </div>
         <ContactForm />
         <div className="my-20 flex flex-wrap justify-center gap-8">
-            {contact.info.map((item, index) => (
-              <div key={index} className="w-full sm:w-1/2 lg:w-1/4 p-2 text-center">
+            {contactInfo.map((item) => (
+              <div key={item.title} className="w-full sm:w-1/2 lg:w-1/4 p-2 text-center">
                 <div className="bg-neutral-800/50 p-6 rounded-2xl border border-neutral-700 h-full transition-all duration-300 hover:border-orange-500 hover:shadow-lg hover:shadow-orange-500/15 transform hover:-translate-y-2">
                   <div className="text-orange-500 mb-5 inline-flex h-16 w-16 items-center justify-center rounded-full bg-neutral-900">
-                    {React.cloneElement(item.icon, { size: 32 })}
+                    <Icon name={item.icon} size={32} />
                   </div>
                   <div>
                     <h5 className="mb-2 text-xl text-white">{item.title}</h5>
-                    <p className="text-md text-neutral-400">{item.value}</p>
+                    <a href={item.href} className="text-md text-neutral-400 hover:text-orange-500 transition-colors">
+                      {item.value}
+                    </a>
                   </div>
                 </div>
               </div>
