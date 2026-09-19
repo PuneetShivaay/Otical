@@ -24,6 +24,10 @@ export default function sitemap() {
     { path: '/work', priority: 0.9 },
     { path: '/about', priority: 0.7 },
     { path: '/contact', priority: 0.7 },
+    // Low priority, but included: search engines treat a reachable privacy
+    // policy as a trust signal, and its absence as a negative one.
+    { path: '/privacy', priority: 0.3 },
+    { path: '/terms', priority: 0.3 },
   ].map((route) => ({
     url: `${site.url}${route.path}`,
     lastModified,

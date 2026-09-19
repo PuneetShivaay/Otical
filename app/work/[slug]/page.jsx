@@ -180,7 +180,7 @@ export default function CaseStudyPage({ params }) {
               <ul className="mt-6 space-y-3">
                 {study.approach.map((item) => (
                   <li key={item} className="flex gap-3">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand/10 text-brand">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
                       <Icon name="Check" size={12} />
                     </span>
                     <span className="leading-relaxed text-fg-muted">{item}</span>
