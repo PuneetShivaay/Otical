@@ -35,6 +35,12 @@ export function generateStaticParams() {
   return services.map((service) => ({ service: service.slug }));
 }
 
+/**
+ * Unknown slugs must be a real 404, not a soft 404 (HTTP 200 with an error
+ * page). See the fuller note in app/work/[slug]/page.jsx.
+ */
+export const dynamicParams = false;
+
 export function generateMetadata({ params }) {
   const service = getServiceBySlug(params.service);
   if (!service) return {};

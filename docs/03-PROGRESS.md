@@ -14,7 +14,7 @@ Branch: `devdeploy/future` · Started: 2026-09-19
 | **3** | Case studies engine — `/work/[slug]` detail template | ✅ Done |
 | **4** | Services — index + deep service template | ✅ Done |
 | **5** | About + Contact (qualified form, hardened API) | ✅ Done |
-| **6** | SEO + performance pass (metadata, OG, JSON-LD, Lighthouse 95+) | ⬜ Next |
+| **6** | SEO + performance pass (metadata, OG, JSON-LD, Lighthouse 95+) | ✅ Done |
 
 ---
 
@@ -252,6 +252,61 @@ Result: 115 kB → **106 kB**, with `/about` and `/contact` now fully rebuilt.
 
 ---
 
+## Phase 6 checklist — SEO & polish
+
+- [x] **Soft 404 fixed** (see below) — the most consequential item in this phase
+- [x] Branded `app/not-found.jsx` — routes back into the site, `robots: noindex`
+- [x] `app/sitemap.js` — generated from the data, 19 URLs, correct domain
+- [x] `app/robots.js` — disallows `/styleguide` and `/api/`
+- [x] Deleted stale `public/sitemap.xml` and `public/robots.txt`
+- [x] Root layout: OpenGraph, Twitter card, keywords, `googleBot` directives,
+      canonical, `themeColor` matched to the background token
+- [x] `Organization` JSON-LD, derived from `data/site.js`
+- [x] Skip-to-content link — first stop for keyboard users
+- [x] `app/loading.jsx` rewritten — was a client component using styled-jsx with
+      a hardcoded `#f97316` (the *old* orange). Now a server component on tokens,
+      shipping zero JS
+- [x] Deleted `.env` — it held only the dead `VITE_EMAILJS_PUBLIC_KEY`
+- [x] Verified against a running server: `/work/nope` 404, `/services/nope` 404,
+      `/projects` 308, sitemap and robots 200, `og:title`/`canonical`/`ld+json`
+      present in rendered HTML
+
+### The soft 404 — why it mattered
+
+`/work/nope` returned **HTTP 200** while showing an error page. The visitor saw
+"not found"; Google was told "this is a valid page."
+
+Cause: `generateStaticParams` lists the real slugs, but Next's default
+`dynamicParams: true` means anything else is rendered on demand — so Next streams
+a shell with a 200 status before `notFound()` resolves. The fix is one line per
+dynamic route:
+
+```js
+export const dynamicParams = false;
+```
+
+Now only generated slugs exist; everything else is a real 404. Worth knowing
+because it is invisible in a browser — both cases *look* like an error page.
+It only shows up when checking status codes.
+
+### Not done: the OG image
+
+`app/opengraph-image.js` was written using `next/og`, but `ImageResponse` needs
+to fetch a font at build time and failed here with `TypeError: Invalid URL`,
+breaking the build. Rather than leave a broken build or keep guessing at it, the
+route was removed.
+
+**Consequence:** links shared to LinkedIn, WhatsApp or Slack currently render as
+a text-only card. This is the highest-leverage remaining SEO asset, because it is
+what people see before deciding to click.
+
+Two ways forward:
+1. Design a static 1200×630 PNG, save as `app/opengraph-image.png` — Next picks
+   it up by filename, no code and no build risk. **Recommended.**
+2. Retry `next/og` with an explicit local font file passed to `ImageResponse`.
+
+---
+
 ## Known issues inherited from the old site
 
 - [x] ~~Fabricated testimonials~~ — deleted in Phase 2; only `data/testimonials.js` is used
@@ -263,20 +318,20 @@ Result: 115 kB → **106 kB**, with `/about` and `/contact` now fully rebuilt.
 - [x] ~~`/api/send` has no spam / rate-limit protection~~ — hardened in Phase 5
 - [x] ~~Not yet migrated to tokens: `components/{About,Contact}`~~ — rebuilt in Phase 5
 - [x] ~~`framer-motion` only used by the legacy ContactForm~~ — dependency removed
-- [ ] Per-page SEO metadata still missing on a few routes (Phase 6)
-- [ ] `public/sitemap.xml` is hand-maintained and now stale — replace with `app/sitemap.js` (Phase 6)
-- [ ] `VITE_*` keys still in `.env` — legacy from the Vite build (Phase 6)
-- [ ] `app/loading.jsx` still hardcodes `#f97316` (old orange) and uses `styled-jsx`
-      rather than tokens (Phase 6)
-- [ ] `/work/[slug]` and `/services/[service]` correctly 404 on unknown slugs, but
-      render the **stock Next.js 404 body**. Needs a branded `app/not-found.jsx`
-      with routes back into the site (Phase 6)
+- [x] ~~Per-page SEO metadata missing~~ — added in Phase 6
+- [x] ~~`public/sitemap.xml` hand-maintained and stale~~ — replaced with `app/sitemap.js`
+- [x] ~~`VITE_*` keys still in `.env`~~ — `.env` deleted in Phase 6
+- [x] ~~`app/loading.jsx` hardcodes `#f97316`~~ — rebuilt on tokens in Phase 6
+- [x] ~~Stock Next.js 404 body~~ — branded `app/not-found.jsx` in Phase 6
+- [ ] **No OG image** — shared links render as text-only cards. See the Phase 6
+      note; a static `app/opengraph-image.png` is the simplest fix
 - [ ] `sharp` not installed — `next start` warns that production image
       optimisation will be slower. Vercel provides it, so this only affects local
-      production runs; install if self-hosting (Phase 6)
+      production runs; install if self-hosting
 - [ ] **Rate limiting is per-instance, not global.** Serverless instances do not
       share memory, so a distributed attacker exceeds the limit. Fine for casual
       abuse; move to Upstash/Vercel KV if this endpoint is ever targeted
+- [ ] Lighthouse has **not** been run — needs a deployed URL to be meaningful
 
 ---
 

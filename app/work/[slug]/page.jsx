@@ -39,6 +39,16 @@ export function generateStaticParams() {
   return caseStudies.map((study) => ({ slug: study.slug }));
 }
 
+/**
+ * Only the slugs above exist. Without this, Next treats unknown slugs as
+ * renderable-on-demand and serves them a streaming shell with HTTP 200 before
+ * `notFound()` resolves — a "soft 404". The visitor sees an error page, but
+ * search engines are told the URL is valid and index infinite junk URLs.
+ *
+ * `false` makes anything outside generateStaticParams a real 404.
+ */
+export const dynamicParams = false;
+
 export function generateMetadata({ params }) {
   const study = getCaseStudyBySlug(params.slug);
   if (!study) return {};

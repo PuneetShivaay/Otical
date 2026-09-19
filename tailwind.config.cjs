@@ -111,10 +111,16 @@ module.exports = {
           from: { opacity: '0', transform: 'translateY(16px)' },
           to: { opacity: '1', transform: 'none' },
         },
+        // Route-change indicator in app/loading.jsx.
+        'loading-bar': {
+          from: { transform: 'translateX(-100%)' },
+          to: { transform: 'translateX(400%)' },
+        },
       },
       animation: {
         marquee: 'marquee 40s linear infinite',
         reveal: 'reveal 500ms cubic-bezier(0.22, 1, 0.36, 1) backwards',
+        'loading-bar': 'loading-bar 1.2s ease-in-out infinite',
       },
     },
   },
