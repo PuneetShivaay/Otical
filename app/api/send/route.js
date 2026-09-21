@@ -156,6 +156,14 @@ export async function POST(req) {
     );
   }
 
+  if (!process.env.RESEND_FROM_EMAIL || !process.env.RESEND_TO_EMAIL) {
+    console.error('Email sender or recipient is not configured');
+    return NextResponse.json(
+      { error: 'Email service is not fully configured.' },
+      { status: 500 }
+    );
+  }
+
   // ---- Send -------------------------------------------------------------
   try {
     const resend = new Resend(process.env.RESEND_API_KEY);
@@ -164,8 +172,8 @@ export async function POST(req) {
     const safeEmail = sanitiseHeaderValue(email);
 
     const { data, error } = await resend.emails.send({
-      from: 'Otical Website <onboarding@resend.dev>',
-      to: ['oticalmail@gmail.com'],
+      from: `Otical Website <${process.env.RESEND_FROM_EMAIL}>`,
+      to: [process.env.RESEND_TO_EMAIL],
       replyTo: safeEmail,
       subject: `New enquiry from ${safeName}${company ? ` (${sanitiseHeaderValue(company)})` : ''}`,
       react: (
