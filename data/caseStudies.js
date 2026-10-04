@@ -40,6 +40,33 @@
 
 export const caseStudies = [
   {
+    slug: 'maha-metro-bms-integration',
+    client: 'MAHA METRO',
+    title: 'BMS Systems Integration for Metro Infrastructure',
+    summary:
+      'A centralized building management solution connecting essential metro building services for unified monitoring, alarms and operational visibility.',
+    services: ['iot-projects'],
+    industry: 'Metro Rail / Building Automation',
+    year: '2025',
+    challenge:
+      'Metro infrastructure depends on multiple building services, including HVAC and electrical systems. Operators needed a unified way to monitor equipment status, identify faults and access operational information.',
+    solution:
+      'Otical integrated building services with a centralized BMS platform, bringing equipment status, supported controls and alarms into a common monitoring interface.',
+    approach: [
+      'Integrated compatible field devices, controllers and building automation systems',
+      'Configured centralized monitoring for equipment status and operating parameters',
+      'Connected supported HVAC and electrical-system points to the BMS interface',
+      'Set up centralized alarm and fault visibility for operators',
+      'Verified communications and completed point-to-point and functional commissioning checks',
+    ],
+    results: [],
+    techStack: ['BMS / SCADA', 'PLC / DDC controllers', 'HVAC monitoring', 'Electrical systems', 'Alarm management'],
+    cover: '/images/work/maha-metro-bms/cover.svg',
+    images: [],
+    featured: false,
+  },
+
+  {
     slug: 'petmets',
     client: 'PetMets',
     title: 'A production pet-care platform, web and mobile',
@@ -63,7 +90,7 @@ export const caseStudies = [
     ],
     results: [], // Awaiting real metrics from the client.
     techStack: [],
-    cover: '/images/clients/PetMets.png',
+    cover: '/gif/clients/petmets.gif',
     images: [],
     featured: true,
   },
@@ -92,7 +119,9 @@ export const caseStudies = [
     ],
     results: [],
     techStack: [],
-    cover: '/images/clients/UdaratvaLogo.png',
+    // cover: '/images/clients/UdaratvaLogo.png',
+        cover: '/gif/clients/udaratva.gif',
+
     images: [],
     featured: true,
   },
@@ -121,8 +150,8 @@ export const caseStudies = [
     ],
     results: [],
     techStack: [],
-    cover: '/images/clients/Mohak.png',
-    images: [],
+    cover: '/gif/clients/mohak.gif',
+    images: ['/images/clients/Mohak.png'],
     featured: true,
   },
 
@@ -150,8 +179,8 @@ export const caseStudies = [
     ],
     results: [],
     techStack: [],
-    cover: '/images/clients/MindPick.png',
-    images: [],
+    cover: '/gif/clients/mindpick.gif',
+    images: ['/images/clients/MindPick.png'],
     featured: true,
   },
 
@@ -180,7 +209,8 @@ export const caseStudies = [
     ],
     results: [],
     techStack: [],
-    cover: '/images/clients/Guruphoria.png',
+        cover: '/gif/clients/guruphoria.gif',
+
     images: [],
     featured: false,
   },
