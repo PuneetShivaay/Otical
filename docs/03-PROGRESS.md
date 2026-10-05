@@ -61,7 +61,7 @@ Full class strings are now stored in the data. **Never construct Tailwind class 
 - [x] `Footer` — every link points somewhere real (was three columns of `#`)
 - [x] `Hero` — **no video**; CSS radial gradients + grid mask, zero JS
 - [x] `ClientMarquee` — 24 logos, transform-only loop, duplicate copy `aria-hidden`
-- [x] `ServicesOverview` — grouped by the 4 pillars
+- [x] `ServicesOverview` — grouped by pillars, with adaptive Build+Design merge when Design has only one service
 - [x] `FeaturedWork` — renders from `caseStudies`; hides itself when empty
 - [x] `Process` — ordered list, semantic `<ol>`
 - [x] `Testimonials` — **the 6 real quotes**, fabricated ones deleted
@@ -118,7 +118,7 @@ Baseline after Phase 0: 9 static pages, **87.3 kB shared JS**, home at 147 kB Fi
 
 - [x] `data/services.js` rewritten with a deep schema — each service now carries
       `summary`, `description`, `pillar`, `outcomes[]`, `capabilities[]`, `stack[]`, `faqs[]`
-- [x] `/services` index — grouped by the 4 pillars, plus the shared engagement process
+- [x] `/services` index — grouped by pillars (same adaptive Build+Design merge logic as home), plus the shared engagement process
 - [x] `/services/[service]` — outcomes, capabilities, process, stack, related work,
       FAQs and CTA; every block hides when its data is empty
 - [x] `generateStaticParams` + `generateMetadata` — **all 9 service pages prerender as static HTML**

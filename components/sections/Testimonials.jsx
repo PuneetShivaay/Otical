@@ -1,5 +1,15 @@
+import Image from 'next/image';
 import { testimonials } from '@/data';
 import { Card, Reveal, Section, SectionHeading } from '@/components/ui';
+
+function getInitials(value = '') {
+  return value
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((word) => word[0]?.toUpperCase() ?? '')
+    .join('');
+}
 
 /**
  * Client testimonials.
@@ -29,8 +39,26 @@ export default function Testimonials() {
                 &ldquo;{testimonial.quote}&rdquo;
               </blockquote>
               <figcaption className="mt-6 border-t border-border-subtle pt-4">
-                <p className="text-sm font-medium text-fg">{testimonial.name}</p>
-                <p className="text-sm text-fg-subtle">{testimonial.company}</p>
+                <div className="flex items-center gap-3">
+                  {testimonial.logo ? (
+                    <Image
+                      src={testimonial.logo}
+                      alt={`${testimonial.company} logo`}
+                      width={40}
+                      height={40}
+                      className="h-10 w-10 rounded-md border border-border-subtle bg-white object-contain p-1"
+                    />
+                  ) : (
+                    <div className="flex h-10 w-10 items-center justify-center rounded-md border border-border-subtle bg-panel text-xs font-semibold text-fg-subtle">
+                      {getInitials(testimonial.company || testimonial.name)}
+                    </div>
+                  )}
+
+                  <div>
+                    <p className="text-sm font-medium text-fg">{testimonial.name}</p>
+                    <p className="text-sm text-fg-subtle">{testimonial.company}</p>
+                  </div>
+                </div>
               </figcaption>
             </Card>
           </Reveal>

@@ -16,7 +16,7 @@ Marketing site for "Otical" built with **Next.js 14 App Router (JSX only, no Typ
 - Components are default-exported function components; no state management library, no tests, no `src/` directory.
 
 ## Contact / email flow
-`ContactForm.jsx` validates locally (`validateForm` builds an `errors` map), then `POST`s `{ email, subject, message }` to `/api/send`, surfacing results via `react-hot-toast`. `app/api/send/route.js` is a Route Handler using **Resend** (`process.env.RESEND_API_KEY`, from `onboarding@resend.dev` → `oticalmail@gmail.com`) and returns `NextResponse.json(...)` — note it returns HTTP 200 even on failure with an `{ error }` body, so the client checks the payload. It embeds JSX in `react:` despite the `.js` extension; keep that pattern if editing.
+`ContactForm.jsx` validates locally (`validateForm` builds an `errors` map), then `POST`s to `/api/send`, surfacing results via `react-hot-toast`. `app/api/send/route.js` is a Route Handler using **Resend** (`process.env.RESEND_API_KEY`, from `RESEND_FROM_EMAIL` → `RESEND_TO_EMAIL`) and returns `NextResponse.json(...)` with real HTTP status codes on errors. The email body is sent as a sanitized HTML string (`html:`), not `react:` JSX, to avoid production bundling/runtime issues.
 `@emailjs/browser` and the `VITE_*` keys in `.env` are legacy from the Vite version — prefer the Resend route.
 
 ## Workflows

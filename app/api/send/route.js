@@ -84,6 +84,15 @@ function isRateLimited(ip) {
  */
 const sanitiseHeaderValue = (value) => String(value).replace(/[\r\n]/g, ' ').trim();
 
+/** Escape HTML special characters so form input can't break out of the email markup. */
+const escapeHtml = (value) =>
+  String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
 const isValidEmail = (email) =>
   typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -171,44 +180,31 @@ export async function POST(req) {
     const safeName = sanitiseHeaderValue(name);
     const safeEmail = sanitiseHeaderValue(email);
 
+    // Plain HTML string, not Resend's `react:` prop. `react:` renders via
+    // react-dom/server inside the Resend SDK, and that internal renderer gets
+    // mangled by Next.js's production bundling in the Vercel serverless
+    // runtime ("TypeError: t is not a function" inside resend's create call).
+    // A plain HTML string sidesteps that renderer entirely.
+    const htmlBody = `
+      <div>
+        <h2>New enquiry</h2>
+        <p><strong>Name:</strong> ${escapeHtml(safeName)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(safeEmail)}</p>
+        ${company ? `<p><strong>Company:</strong> ${escapeHtml(company)}</p>` : ''}
+        ${service ? `<p><strong>Service:</strong> ${escapeHtml(service)}</p>` : ''}
+        ${budget ? `<p><strong>Budget:</strong> ${escapeHtml(budget)}</p>` : ''}
+        ${timeline ? `<p><strong>Timeline:</strong> ${escapeHtml(timeline)}</p>` : ''}
+        <hr />
+        <p style="white-space: pre-wrap;">${escapeHtml(message)}</p>
+      </div>
+    `;
+
     const { data, error } = await resend.emails.send({
       from: `Otical Website <${process.env.RESEND_FROM_EMAIL}>`,
       to: [process.env.RESEND_TO_EMAIL],
       replyTo: safeEmail,
       subject: `New enquiry from ${safeName}${company ? ` (${sanitiseHeaderValue(company)})` : ''}`,
-      react: (
-        <div>
-          <h2>New enquiry</h2>
-          <p>
-            <strong>Name:</strong> {safeName}
-          </p>
-          <p>
-            <strong>Email:</strong> {safeEmail}
-          </p>
-          {company ? (
-            <p>
-              <strong>Company:</strong> {company}
-            </p>
-          ) : null}
-          {service ? (
-            <p>
-              <strong>Service:</strong> {service}
-            </p>
-          ) : null}
-          {budget ? (
-            <p>
-              <strong>Budget:</strong> {budget}
-            </p>
-          ) : null}
-          {timeline ? (
-            <p>
-              <strong>Timeline:</strong> {timeline}
-            </p>
-          ) : null}
-          <hr />
-          <p style={{ whiteSpace: 'pre-wrap' }}>{message}</p>
-        </div>
-      ),
+      html: htmlBody,
     });
 
     // The Resend SDK reports failures in `error` rather than throwing, so this

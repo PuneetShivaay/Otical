@@ -1,4 +1,4 @@
-import { services, servicePillars, serviceHref } from '@/data';
+import { getDisplayedPillars, getServicesForPillar, serviceHref } from '@/data';
 import {
   Button,
   Card,
@@ -13,8 +13,13 @@ import {
  *
  * The grouping is the point: nine services listed flat read as "unfocused",
  * while four pillars read as integrated capability. See docs/00-PROJECT-BRIEF.md.
+ *
+ * Build & Design merge logic lives in `data/services.js` (`getDisplayedPillars`)
+ * — this component and `/services` must not re-derive it independently.
  */
 export default function ServicesOverview() {
+  const displayedPillars = getDisplayedPillars();
+
   return (
     <Section tone="surface" id="services">
       <SectionHeading
@@ -24,8 +29,8 @@ export default function ServicesOverview() {
       />
 
       <div className="mt-16 space-y-14">
-        {servicePillars.map((pillar) => {
-          const pillarServices = services.filter((s) => s.pillar === pillar.id);
+        {displayedPillars.map((pillar) => {
+          const pillarServices = getServicesForPillar(pillar);
 
           return (
             <div key={pillar.id}>

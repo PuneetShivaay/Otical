@@ -19,7 +19,7 @@ We take a client from strategy → design → build → deploy → secure → sc
 | 6 | DevOps & Cloud | `/services/devops-cloud` |
 | 7 | Cybersecurity | `/services/cybersecurity` |
 | 8 | IT Consulting | `/services/it-consulting` |
-| 9 | IOT Projects | `/services/iot-projects` |
+| 9 | Industrial Automation and IoT | `/services/iot-projects` |
 
 **Graphic Design** is a team capability (see `team`), presented under **UI/UX Design** — it is *not* a standalone service.
 

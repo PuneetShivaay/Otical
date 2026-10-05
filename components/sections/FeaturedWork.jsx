@@ -36,13 +36,14 @@ export default function FeaturedWork() {
         {featuredCaseStudies.map((study, index) => (
           <Reveal key={study.slug} delay={index * 0.06}>
             <article className="group h-full overflow-hidden rounded-2xl border border-border-subtle bg-surface transition-colors hover:border-border-strong">
-              <div className="relative aspect-[16/9] overflow-hidden border-b border-border-subtle bg-surface-2">
+              <div className="relative aspect-[800/381] overflow-hidden border-b border-border-subtle bg-surface-2">
                 <Image
                   src={study.cover}
                   alt={`${study.client} project preview`}
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-contain"
+                  unoptimized={study.cover.endsWith('.gif')}
+                  className="object-contain object-center"
                 />
               </div>
 

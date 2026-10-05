@@ -319,11 +319,11 @@ export const services = [
 
   {
     slug: 'iot-projects',
-    title: 'IOT Projects',
+    title: 'Industrial Automation and IoT',
     icon: 'Cpu',
     summary: 'Connected devices, telemetry and remote control.',
     description:
-      'We design and build custom IOT solutions that connect and automate devices — enabling data collection, monitoring and remote control across industrial and consumer applications.',
+      'We design and build custom IoT solutions that connect and automate devices — enabling data collection, monitoring and remote control across industrial and consumer applications.',
     pillar: 'intelligence',
     outcomes: [
       'Live visibility of equipment you currently check manually',
@@ -549,6 +549,36 @@ export const servicePillars = [
 
 /** Helper used by the dynamic route. Returns undefined when not found. */
 export const getServiceBySlug = (slug) => services.find((s) => s.slug === slug);
+
+/**
+ * Build & Design currently render as one merged pillar card whenever Design
+ * only has a single service — a standalone "Design" card next to a packed
+ * "Build" card reads as lopsided, not as a dedicated discipline. The merge
+ * auto-reverts the moment a second design service is added, so this is the
+ * ONE place that decides the split; both `ServicesOverview` (home) and the
+ * `/services` index call this instead of each re-deriving the same logic.
+ */
+export const getDisplayedPillars = () => {
+  const designServicesCount = services.filter((s) => s.pillar === 'design').length;
+  const shouldMergeBuildAndDesign = designServicesCount <= 1;
+
+  if (!shouldMergeBuildAndDesign) return servicePillars;
+
+  return [
+    {
+      id: 'build-design',
+      title: 'Build & Design',
+      description: 'Web, mobile, product, interface and brand design.',
+    },
+    ...servicePillars.filter((pillar) => !['build', 'design'].includes(pillar.id)),
+  ];
+};
+
+/** Services belonging to a displayed pillar, handling the merged `build-design` id. */
+export const getServicesForPillar = (pillar) =>
+  pillar.id === 'build-design'
+    ? services.filter((s) => ['build', 'design'].includes(s.pillar))
+    : services.filter((s) => s.pillar === pillar.id);
 
 /** Convenience for building links without hardcoding the URL shape. */
 export const serviceHref = (slug) => `/services/${slug}`;
