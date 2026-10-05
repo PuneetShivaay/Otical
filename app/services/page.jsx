@@ -1,8 +1,8 @@
 import {
-  services,
-  servicePillars,
   serviceHref,
   processSteps,
+  getDisplayedPillars,
+  getServicesForPillar,
 } from '@/data';
 import { CTABanner } from '@/components/sections';
 import {
@@ -17,7 +17,7 @@ import {
 export const metadata = {
   title: 'Services',
   description:
-    'Web, mobile, design, AI, blockchain, IOT, cloud, security and consulting — every layer of your digital stack, delivered by one accountable team.',
+    'Web, mobile, design, AI, blockchain, IoT and Industrial Automation, cloud, security and consulting — every layer of your digital stack, delivered by one accountable team.',
 };
 
 /**
@@ -28,8 +28,13 @@ export const metadata = {
  *
  * Copy here deliberately avoids stating a service count ("nine services"), so
  * adding or retiring a service never leaves stale marketing text behind.
+ *
+ * Build & Design merge logic lives in `data/services.js` (`getDisplayedPillars`)
+ * — this page and `ServicesOverview` (home) must not re-derive it independently.
  */
 export default function ServicesPage() {
+  const displayedPillars = getDisplayedPillars();
+
   return (
     <>
       <PageHeader
@@ -40,8 +45,8 @@ export default function ServicesPage() {
 
       <Section spacing="default">
         <div className="space-y-16">
-          {servicePillars.map((pillar) => {
-            const pillarServices = services.filter((s) => s.pillar === pillar.id);
+          {displayedPillars.map((pillar) => {
+            const pillarServices = getServicesForPillar(pillar);
 
             return (
               <div key={pillar.id}>

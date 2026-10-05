@@ -11,36 +11,42 @@ export const testimonials = [
   {
     name: 'Pankaj Sharma',
     company: 'Udaratva',
+    logo: '/images/clients/UdaratvaLogo.png',
     quote:
       'I am extremely satisfied with the services provided. The team was professional, and the results were delivered on time.',
   },
   {
     name: 'Sushil Mishra',
     company: 'Ranak Energy',
+    logo: '/images/clients/RanakEnergy.png',
     quote:
       'The team went above and beyond to meet our needs. I would highly recommend them to anyone looking for quality services.',
   },
   {
     name: 'Vishal Singh',
     company: 'MMP',
+    logo: '/images/clients/MMP.png',
     quote:
       'Working with this company was a pleasure. The team was responsive, and the results were excellent and on time.',
   },
   {
     name: 'Amir Khan',
     company: 'DekhoTo',
+    logo: '/images/clients/DekhoTo.png',
     quote:
       'The team was knowledgeable and experienced, and they were able to deliver a high-quality product on time and within budget.',
   },
   {
     name: 'Abhishek Singh',
     company: 'BookDesigner',
+    logo: '/images/clients/BookDesigner.png',
     quote:
       "I was impressed with the team's attention to detail and their commitment to delivering a high-quality product.",
   },
   {
     name: 'Shashi Singh',
     company: 'Mohak',
+    logo: '/images/clients/Mohak.png',
     quote:
       'The team was a pleasure to work with, and I would not hesitate to recommend them to anyone looking for a reliable and trustworthy partner.',
   },

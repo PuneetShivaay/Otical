@@ -8,7 +8,8 @@
 ## Add a case study
 
 1. Open `data/caseStudies.js` and add one object to the array.
-2. Put images in `public/images/work/<slug>/`.
+2. Put static screenshots in `public/images/work/<slug>/`.
+  - If the card cover is an animated GIF, place it in `public/gif/clients/` and reference that path in `cover`.
 3. Done — `/work` and `/work/<slug>` pick it up automatically, and the page is
    pre-rendered as static HTML at build time.
 
@@ -51,6 +52,9 @@
 
 Edit `data/services.js`. The set of 9 is fixed — adding a tenth is a positioning
 decision, so record it in `docs/03-PROGRESS.md` first.
+
+If you rename service copy (for example, `title`), prefer keeping existing `slug`
+values stable for live URLs unless you are planning redirects.
 
 ```js
 {

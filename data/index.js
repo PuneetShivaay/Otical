@@ -20,8 +20,15 @@ export {
   enquiryTimelines,
   processSteps,
 } from './site';
-export { services, servicePillars, getServiceBySlug, serviceHref } from './services';
+export {
+  services,
+  servicePillars,
+  getServiceBySlug,
+  serviceHref,
+  getDisplayedPillars,
+  getServicesForPillar,
+} from './services';
 export { clients } from './clients';
 export { caseStudies, featuredCaseStudies, getCaseStudyBySlug, caseStudyHref } from './caseStudies';
-export { team } from './team';
+export { team, teamDepartments } from './team';
 export { testimonials } from './testimonials';

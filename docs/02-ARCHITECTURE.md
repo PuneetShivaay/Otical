@@ -22,7 +22,8 @@ components/
 ├── ui/                   Primitives. Dumb, reusable, NO business data
 │                         Container, Section, SectionHeading, Button, Card, Badge, Reveal
 ├── sections/             Page sections. Compose ui/, read from data/
-│                         Hero, ServicesGrid, ClientMarquee, ProcessTimeline, CTABanner
+│                         Hero, ServicesOverview, ClientMarquee, Process, FeaturedWork,
+│                         Testimonials, Team, ContactForm, CTABanner
 └── layout/               Navbar, Footer, ThemeToggle
 
 data/                     All content. Plain .js, serializable
@@ -30,11 +31,11 @@ data/                     All content. Plain .js, serializable
 ├── services.js           The 9 services
 ├── caseStudies.js        Full case studies (3–4)
 ├── clients.js            All 24 logos
-├── team.js               9 members
-└── testimonials.js       6 testimonials
+├── team.js               Team member profiles
+└── testimonials.js       Approved client quotes
 
 docs/                     These documents
-public/                   images/{clients,team,testimonials}, logo, og
+public/                   images/{clients,team,testimonials,work}, gif/clients, logo, og
 ```
 
 ## The three rules
@@ -83,8 +84,8 @@ modern formats, which directly protects LCP/CLS.
 
 ## Contact flow
 
-`ContactForm` validates locally → `POST /api/send` → Resend → `oticalmail@gmail.com`.
-The old handler returned **HTTP 200 even on failure**; it must return proper status codes.
+`ContactForm` validates locally → `POST /api/send` → Resend (`RESEND_FROM_EMAIL` → `RESEND_TO_EMAIL`).
+The handler returns proper HTTP status codes on error and sends a sanitized HTML email body.
 
 ## SEO
 

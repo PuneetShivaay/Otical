@@ -1,21 +1,72 @@
-# Otical Website using Next.js
+# Otical — Next.js Marketing Site
 
-This is the official website for Otical, built with the Next.js framework.
+Production site: https://otical.vercel.app/
 
-Deployed to Vercel Hosting (New Version) : https://otical.vercel.app/
+Old Version : https://otical.web.app/
 
-Deployed to Firebase Hosting (Old Version) : https://otical.web.app/
+ Otical TextUtils App : https://oticaltextutils.web.app/
 
-See also Otical Text Utils App : https://oticaltextutils.web.app/
+This repository contains the current Otical website built with **Next.js 14 App Router** (JSX, no TypeScript), Tailwind CSS and Framer Motion.
 
-## Some Screenshots
+> Firebase hosting links are legacy from the old Vite version and are not part of this deployment flow.
 
-![{7223453D-A97B-40F8-9191-22E6F5782810}](https://github.com/user-attachments/assets/92b6ad39-b618-4a99-90e3-4c0a34b46e39)
+## Tech stack
 
-![{5C7C7568-CD4F-4B82-957E-7063F91857BB}](https://github.com/user-attachments/assets/e5004a9f-836c-490c-b466-f9f0696dfe45)
+- Next.js 14 (App Router)
+- React (JSX)
+- Tailwind CSS
+- Framer Motion
+- Resend (contact form email delivery)
 
-![{2B811C03-FEC0-46E0-A051-C5EE9195A93F}](https://github.com/user-attachments/assets/df6af6e8-4a9f-42b5-99bb-1ef3b1458395)
+## Project structure (high-level)
 
-![{584A77DB-1E35-460E-9D7D-19C10894B66F}](https://github.com/user-attachments/assets/9d712e39-95bb-4cb2-889b-a7bc8f6870f4)
+- `app/` — route shells and route handlers
+- `components/ui/` — reusable UI primitives
+- `components/sections/` — page sections composed from data
+- `data/` — single source of site content
+- `public/` — static media
+- `docs/` — architecture/content/progress documentation
 
-![{5E64E80D-666B-42A2-BE71-64D77D6994DB}](https://github.com/user-attachments/assets/03ac1225-5d59-4255-b2b5-f145ad7ee6c5)
+## Contact form + email flow
+
+- `components/sections/ContactForm.jsx` posts to `POST /api/send`
+- `app/api/send/route.js` validates input + honeypot + rate limit, then sends email via Resend
+- Error responses use real HTTP status codes
+- Email payload is sent as sanitized `html` (not `react` JSX) for production runtime stability
+
+Required environment variables:
+
+- `RESEND_API_KEY`
+- `RESEND_FROM_EMAIL`
+- `RESEND_TO_EMAIL`
+
+Use `.env.local` for local development. Do not commit secrets.
+
+## Content model
+
+Most content is data-driven from `data/`:
+
+- Services: `data/services.js`
+- Case studies: `data/caseStudies.js`
+- Testimonials: `data/testimonials.js`
+- Team: `data/team.js`
+- Site/nav/contact info: `data/site.js`
+
+Adding a service or case study is generally adding one object in data (routes resolve by slug).
+
+## Media conventions
+
+- Work screenshots: `public/images/work/<slug>/`
+- Animated work covers (GIF): `public/gif/clients/`
+- Client logos: `public/images/clients/`
+
+## Local development
+
+- `npm run dev` — start dev server
+- `npm run lint` — run ESLint
+- `npm run build` — production build check
+- `npm run start` — run built app
+
+## Deployment
+
+Primary deployment target is **Vercel**.

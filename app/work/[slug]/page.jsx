@@ -121,13 +121,13 @@ export default function CaseStudyPage({ params }) {
         </div>
 
         {/* Cover */}
-        <div className="mt-12 flex aspect-[21/9] items-center justify-center rounded-2xl border border-border-subtle bg-surface p-12">
+        <div className="relative mt-12 aspect-[21/9] overflow-hidden rounded-2xl border border-border-subtle bg-surface">
           <Image
             src={study.cover}
-            alt={`${study.client} logo`}
-            width={480}
-            height={240}
-            className="max-h-32 w-auto object-contain"
+            alt={`${study.client} project preview`}
+            fill
+            sizes="100vw"
+            className="object-contain"
             priority
           />
         </div>
