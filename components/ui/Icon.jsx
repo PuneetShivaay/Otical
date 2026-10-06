@@ -41,6 +41,10 @@ import {
   KeyRound,
   LifeBuoy,
   TriangleAlert,
+  Type,
+  ExternalLink,
+  Gamepad2,
+  UploadCloud,
 } from 'lucide-react';
 
 const iconMap = {
@@ -70,6 +74,10 @@ const iconMap = {
   KeyRound,
   LifeBuoy,
   TriangleAlert,
+  Type,
+  ExternalLink,
+  Gamepad2,
+  UploadCloud,
 };
 
 /** Usage: <Icon name={service.icon} className="h-5 w-5" /> */

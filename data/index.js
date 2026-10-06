@@ -32,3 +32,4 @@ export { clients } from './clients';
 export { caseStudies, featuredCaseStudies, getCaseStudyBySlug, caseStudyHref } from './caseStudies';
 export { team, teamDepartments } from './team';
 export { testimonials } from './testimonials';
+export { tools, toolHref } from './tools';
