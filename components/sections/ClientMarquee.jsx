@@ -76,39 +76,26 @@ export default function ClientMarquee() {
             >
               {clients.map((client) => (
                 /*
-                 * Each logo sits on its own hover plate.
-                 *
-                 * Resting: the plate is transparent and the logo is flattened to
-                 * a silhouette (`brightness-0`, flipped white by `dark:invert`).
-                 * The source logos are inconsistent — several are dark artwork
-                 * on transparent backgrounds and vanished against the dark
-                 * surface — so flattening guarantees legibility in both themes
-                 * and gives the strip one visual weight rather than 24.
-                 *
-                 * Hover: the plate turns near-white and the filters come off, so
-                 * the real brand colours appear against a light background. That
-                 * matters because most of these logos were drawn for light
-                 * backgrounds; showing their true colours on a dark surface
-                 * would leave the dark ones unreadable.
+                 * Each logo sits on a light neutral-gray plate at rest, and
+                 * brightens to white on hover as a subtle interactive cue.
+                 * Logos render in their real brand colours against
+                 * `bg-neutral-200`, which is light enough for dark artwork to
+                 * read, and not stark white.
                  *
                  * It also fixes logos with a baked-in background (DekhoTo has a
-                 * filled circle): on hover the plate matches that background, so
-                 * the mark reads properly instead of as a blob.
-                 *
-                 * `group/logo` is a NAMED group — the marquee has other groups
-                 * around it, and an unnamed `group-hover` would bind to the
-                 * nearest one and highlight every logo at once.
+                 * filled circle): the neutral plate is close enough to white
+                 * that the mark still reads properly instead of as a blob.
                  */
                 <span
                   key={`${copy}-${client.name}`}
-                  className="group/logo flex shrink-0 items-center justify-center rounded-xl px-4 py-3 transition-colors duration-300 hover:bg-white"
+                  className="flex shrink-0 items-center justify-center rounded-xl bg-neutral-200 px-4 py-3 transition-colors duration-200 hover:bg-white"
                 >
                   <Image
                     src={client.logo}
                     alt={copy === 0 ? client.name : ''}
                     width={200}
                     height={80}
-                    className="h-12 w-auto max-w-none object-contain opacity-60 brightness-0 transition duration-300 group-hover/logo:opacity-100 group-hover/logo:brightness-100 dark:invert dark:group-hover/logo:invert-0 sm:h-14"
+                    className="h-12 w-auto max-w-none object-contain sm:h-14"
                   />
                 </span>
               ))}

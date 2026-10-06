@@ -22,6 +22,7 @@ export default function sitemap() {
     { path: '', priority: 1 },
     { path: '/services', priority: 0.9 },
     { path: '/work', priority: 0.9 },
+    { path: '/tools', priority: 0.6 },
     { path: '/about', priority: 0.7 },
     { path: '/contact', priority: 0.7 },
     // Low priority, but included: search engines treat a reachable privacy

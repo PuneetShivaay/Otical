@@ -127,6 +127,20 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+              {/*
+                Tools is deliberately footer-only, not in the primary header
+                nav — it's a side offering (free utilities), not a core page
+                in the main conversion path. Listed here rather than added to
+                `navItems` so it doesn't compete with Services/Work/Contact.
+              */}
+              <li>
+                <Link
+                  href="/tools"
+                  className="text-sm text-fg-muted transition-colors hover:text-fg"
+                >
+                  Tools
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
