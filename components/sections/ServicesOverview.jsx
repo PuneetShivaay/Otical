@@ -17,6 +17,9 @@ import {
  * Build & Design merge logic lives in `data/services.js` (`getDisplayedPillars`)
  * — this component and `/services` must not re-derive it independently.
  */
+// Services that stay on /services but are not featured on the home page.
+const HIDDEN_ON_HOME = ['tax-compliance'];
+
 export default function ServicesOverview() {
   const displayedPillars = getDisplayedPillars();
 
@@ -30,7 +33,9 @@ export default function ServicesOverview() {
 
       <div className="mt-16 space-y-14">
         {displayedPillars.map((pillar) => {
-          const pillarServices = getServicesForPillar(pillar);
+          const pillarServices = getServicesForPillar(pillar).filter(
+            (service) => !HIDDEN_ON_HOME.includes(service.slug),
+          );
 
           return (
             <div key={pillar.id}>

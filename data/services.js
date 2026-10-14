@@ -534,6 +534,72 @@ export const services = [
       },
     ],
   },
+
+  {
+    slug: 'tax-compliance',
+    title: 'Tax & Compliance',
+    icon: 'Users',
+    summary: 'GST, income tax, company registration and audit support.',
+    description:
+      'We provide end-to-end tax and compliance services for individuals, businesses and growing enterprises — covering GST registration and returns, ITR filing, firm and company registration, TDS returns and audits.',
+    pillar: 'infrastructure',
+    outcomes: [
+      'Filings completed on time, against your deadlines',
+      'Registrations and amendments handled end to end',
+      'Clear, transparent pricing with no hidden charges',
+      'A team that knows your business and its history',
+    ],
+    capabilities: [
+      {
+        title: 'GST services',
+        description:
+          'New GST registration, return filing (GSTR-1, GSTR-3B and others), amendments and corrections, and GST advisory.',
+      },
+      {
+        title: 'Income tax and ITR filing',
+        description:
+          'Individual and business income tax return filing, tax planning, and advance tax and self-assessment support.',
+      },
+      {
+        title: 'Firm and company registration',
+        description:
+          'Proprietorship, partnership and LLP setup, firm registration, closure and compliance documentation.',
+      },
+      {
+        title: 'TDS and other tax filings',
+        description:
+          'TDS return filing (24Q, 26Q, 27Q and others), TCS, and other direct and indirect tax compliance.',
+      },
+      {
+        title: 'Audit services',
+        description:
+          'Statutory, internal and tax audits (income tax and GST), plus financial statement review.',
+      },
+      {
+        title: 'Corporate compliance',
+        description:
+          'MAT, AMT and ROC compliance, corporate law and annual filings.',
+      },
+    ],
+    stack: [],
+    faqs: [
+      {
+        question: 'Do you handle both individual and business tax?',
+        answer:
+          'Yes. We work with individuals, sole proprietors, partnerships, LLPs, companies and growing enterprises.',
+      },
+      {
+        question: 'Can you help us register a new business?',
+        answer:
+          'Yes. We handle proprietorship, partnership and LLP setup, firm registration, and the documentation that follows.',
+      },
+      {
+        question: 'Will you tell us the total cost up front?',
+        answer:
+          'Yes. Pricing is quoted transparently before work starts, with no hidden charges.',
+      },
+    ],
+  },
 ];
 
 /**
